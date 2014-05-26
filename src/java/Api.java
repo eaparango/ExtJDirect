@@ -79,11 +79,10 @@ public class Api extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        response.setContentType ("Content-Type: text/javascript");
+
+        response.setContentType("Content-Type: text/javascript");
         PrintWriter out = response.getWriter();
-        
+
         // Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File("Config.xml");
@@ -94,7 +93,7 @@ public class Api extends HttpServlet {
             Document documento = (Document) builder.build(xmlFile);
             // Se obtiene la raiz del documento. En este caso 'cruisecontrol'
             Element rootNode = documento.getRootElement();
-            
+
 //            // Obtengo el tag "info" como nodo raiz para poder trabajar 
 //            // los tags de éste.
 //            Element rootNode_Level2 = rootNode.getChild("info");
@@ -106,68 +105,62 @@ public class Api extends HttpServlet {
 //            for (int i = 0; i < lista.size(); i++) {
 //                System.out.println(((Element) lista.get(i)).getAttributeValue("value"));
 //            }
-            
-            
             // out.println("<!DOCTYPE html>");
-            
             Map<String, Object> actions = new LinkedHashMap<String, Object>();
-            
-            for( Element action: rootNode.getChildren() ){
-                
+
+            for ( Element action : rootNode.getChildren() ) {
+
                 ArrayList<Map> methods = new ArrayList<Map>();
-                
-                for( Element method : action.getChildren() ){
-                    
+
+                for (Element method : action.getChildren()) {
+
                     Map<String, Object> md = new LinkedHashMap<String, Object>();
-                    
-                    if ( method.getAttribute("len") != null ) {
-                        
+
+                    if (method.getAttribute("len") != null) {
+
                         md.put("name", method.getName());
-                        md.put("len", method.getAttribute("len"));
-                        
+                        md.put("len", method.getAttributeValue("len"));
+
                     } else {
-                        
+
                         md.put("name", method.getName());
-                        md.put("params", method.getAttribute("params"));
-                        
+                        md.put("params", method.getAttributeValue("params"));
+
                     }
-                    
-                    if( method.getAttribute("formHandler") != null && method.getAttribute("formHandler") != null ){
-                        
+
+                    if (method.getAttribute("formHandler") != null && method.getAttribute("formHandler") != null) {
+
                         md.put("formHandler", true);
-                        
+
                     }
-                    
-                    methods.add(md); 
-                 }
-                
-                actions.put(action.getName(), methods );
+
+                    methods.add(md);
+                }
+
+                actions.put(action.getName(), methods);
             }
-            
 
         } catch (IOException io) {
             System.out.println(io.getMessage());
         } catch (JDOMException jdomex) {
             System.out.println(jdomex.getMessage());
-        }
-        finally {
+        } finally {
             out.close();
         }
-        
+
     }
-}
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -181,7 +174,7 @@ public class Api extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -192,7 +185,7 @@ public class Api extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
