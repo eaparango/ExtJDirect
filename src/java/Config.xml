@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+    
+    <AlbumList>
+        <methods>
+            <method name="getAll" len="0" />
+            <method name="add" len="1" />
+        </methods>
+    </AlbumList>
+    
+    
+    <AlbumList2>
+        <methods>
+            <method name="getAll" len="0" />
+            <method name="add" len="1" />
+        </methods>
+    </AlbumList2>
+    
+</root>
